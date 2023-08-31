@@ -7,6 +7,7 @@ RUN apt-get update && apt-get dist-upgrade -y && \
     apt-get install -y --no-install-recommends ca-certificates curl jq && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ENV TS_UP="true"
 ENV TS_AUTHKEY="tskey-auth-XYZ"
 ENV TS_HOSTNAME="$HOST"
 ENV TS_ACCEPT_ROUTES="true"

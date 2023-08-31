@@ -3,19 +3,22 @@
 This simple ubuntu based image will start an ephemeral tailscale-node. It is derived from tailscales own best practices for ephemeral nodes, but is also able to auto-generate a valid ssl cert for you ts.net name.
 There are some env vars to configure your connection, only the auth key is mandatory:
 
-- `TS_AUTHKEY` = tskey-auth-XYZ    _mandatory_
-- `TS_HOSTNAME` = "$HOST"          _container id is default value_
-- `TS_ACCEPT_ROUTES` = true
-- `TS_ACCEPT_DNS` = true
-- `TS_CERT` = false                _tailscale will try to  [fetch a SSL cert](https://tailscale.com/kb/1153/enabling-https/?q=https#provision-tls-certificates-for-your-devices)_
-- `TS_EXTRA_ARGS` = ""
-- `TSD_EXTRA_ARGS` = ""
+| VAR | Default | Comment |
+|-----|---------|---------|
+| `TS_AUTHKEY`        | tskey-auth-XYZ  | **mandatory** |
+| `TS_UP`             | true            | disable the setup of yout tailscale connection, e.g. debug purpose |
+| `TS_HOSTNAME`       | $HOST           | _container id is default value_ |
+| `TS_ACCEPT_ROUTES`  | true            | --accept-routes on tailscale |
+| `TS_ACCEPT_DNS`     | true            | --accept-dns on tailscale |
+| `TS_CERT`           | false           | _tailscale will try to [fetch a SSL cert](https://tailscale.com/kb/1153/enabling-https/?q=https#provision-tls-certificates-for-your-devices)_ |
+| `TS_EXTRA_ARGS`     | ""              | ARGS will be added to the tailscale cli |
+| `TSD_EXTRA_ARGS`    | ""              | ARGS will be added to the tailscaled cli |
 
 To run your ephemeral node simply exececute:
 
-```bash
-docker build --rm  -t tailscale-node:latest . 
-docker run --rm -it -e TS_AUTHKEY="tskey-auth-XYZ-XYZ" -e TS_HOSTNAME=ephem-docker tailscale-node:latest
+```shell
+docker pull ghcr.io/ida-greuelr/tailscale-node:main 
+docker run --rm -it -e TS_AUTHKEY="tskey-auth-XYZ-XYZ" -e TS_HOSTNAME=ephem-docker ghcr.io/ida-greuelr/tailscale-node:main
 ```
 
 ## Use tailscale-node as a base image
