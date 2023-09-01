@@ -14,8 +14,13 @@ function echo_fail() {
 
 # For debug purposes you can skip starting tailscale
 if [[ "${TS_UP}" =~ [Tt][Rr][Uu][Ee] ]]; then
-  # Start the daemon
-  tailscaled --tun=userspace-networking ${TSD_EXTRA_ARGS} &> /var/log/tailscaled &
+  if [[ "${TSD_QUIET}" =~ [Tt][Rr][Uu][Ee] ]]; then
+    # Start the daemon
+    tailscaled --tun=userspace-networking ${TSD_EXTRA_ARGS} &> /var/log/tailscaled &
+  else
+    tailscaled --tun=userspace-networking ${TSD_EXTRA_ARGS} &
+  fi
+
   if [ $? -eq 0 ]; then
     echo_success "Tailscale daemon started successfully"
   else

@@ -14,6 +14,7 @@ ENV TS_ACCEPT_ROUTES="true"
 ENV TS_ACCEPT_DNS="true"
 ENV TS_CERT="false"
 ENV TS_EXTRA_ARGS=""
+ENV TSD_QUIET="true"
 ENV TSD_EXTRA_ARGS=""
 
 RUN curl -fsSL https://tailscale.com/install.sh | sh

@@ -3,8 +3,8 @@
 This simple ubuntu based image will start an ephemeral tailscale-node. It is derived from tailscales own best practices for ephemeral nodes, but is also able to auto-generate a valid ssl cert for you ts.net name.
 There are some env vars to configure your connection, only the auth key is mandatory:
 
-| VAR | Default | Comment |
-|-----|---------|---------|
+| VAR                 | Default         | Comment |
+|---------------------|-----------------|----------------------------------------------------------------------------|
 | `TS_AUTHKEY`        | tskey-auth-XYZ  | **mandatory** |
 | `TS_UP`             | true            | disable the setup of yout tailscale connection, e.g. debug purpose |
 | `TS_HOSTNAME`       | $HOST           | _container id is default value_ |
@@ -12,6 +12,7 @@ There are some env vars to configure your connection, only the auth key is manda
 | `TS_ACCEPT_DNS`     | true            | --accept-dns on tailscale |
 | `TS_CERT`           | false           | _tailscale will try to [fetch a SSL cert](https://tailscale.com/kb/1153/enabling-https/?q=https#provision-tls-certificates-for-your-devices)_ |
 | `TS_EXTRA_ARGS`     | ""              | ARGS will be added to the tailscale cli |
+| `TSD_QUIET`         | true            | tailscaled is running quietly by default, set to false for verbose output  |
 | `TSD_EXTRA_ARGS`    | ""              | ARGS will be added to the tailscaled cli |
 
 To run your ephemeral node simply exececute:
