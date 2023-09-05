@@ -12,8 +12,13 @@ function echo_fail() {
   echo -e "\n\e[0;31m 🛑 \e[1;31m$1\n\e[0m"
 }
 
+echo "Starting AdGuardHome with following environment:"
+set | grep TS_ | sed -E 's/TS_AUTHKEY=.+/TS_AUTHKEY=XXX/'
+echo ""
+
 # For debug purposes you can skip starting tailscale
 if [[ "${TS_UP}" =~ [Tt][Rr][Uu][Ee] ]]; then
+  echo -e "Executing: tailscaled --tun=userspace-networking ${TSD_EXTRA_ARGS}\n"
   if [[ "${TSD_QUIET}" =~ [Tt][Rr][Uu][Ee] ]]; then
     # Start the daemon
     tailscaled --tun=userspace-networking ${TSD_EXTRA_ARGS} &> /var/log/tailscaled &
@@ -29,6 +34,7 @@ if [[ "${TS_UP}" =~ [Tt][Rr][Uu][Ee] ]]; then
   fi
 
   # Connect to tailscale network
+  echo -e "Executing: tailscale up --authkey=XXX --hostname=${TS_HOSTNAME} --accept-routes=${TS_ACCEPT_ROUTES} --accept-dns=${TS_ACCEPT_DNS} ${TS_EXTRA_ARGS}\n"
   tailscale up --authkey=${TS_AUTHKEY} --hostname=${TS_HOSTNAME} --accept-routes=${TS_ACCEPT_ROUTES} --accept-dns=${TS_ACCEPT_DNS} ${TS_EXTRA_ARGS}
   if [ $? -eq 0 ]; then
     export CURRENT_HOST=$(tailscale status --peers=false --json | jq -r '.CertDomains[0]')
